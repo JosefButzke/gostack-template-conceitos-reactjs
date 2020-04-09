@@ -16,16 +16,19 @@ function App() {
   }, [])
 
   async function handleAddRepository() {
-    api.post('/repositories', {
+    const response = await api.post('/repositories', {
       title: 'Novo',
       url: 'asdasd',
       techs: ['React Native']
     });
+
+    setRepositories([...repositories, response.data])
   }
 
   async function handleRemoveRepository(id) {
     console.log(id)
     api.delete(`/repositories/${id}`);
+    setRepositories(repositories.filter(repo => repo.id !== id))
   }
 
   return (
